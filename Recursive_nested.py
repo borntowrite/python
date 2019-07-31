@@ -12,10 +12,13 @@
 
 def ackermann(n,m):
     if n==0:
+        print("1---",m,n)
         return m+1
     elif n>0 and m==0:
+        print("2---",m,n)
         return ackermann(n-1,1)
     elif n>0 and m>0:
+        print("3---",m,n)
         return ackermann(n-1, ackermann(n,m-1))
 
 print(ackermann(1,2))

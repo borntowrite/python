@@ -1,18 +1,47 @@
-####################
-# BST w/ array & half search
-####################
-arr_odd = [1,2,5,11, 22, 25, 33, 45, 77]
-arr_even = [1,2,5,11, 22, 25, 33, 45, 77, 88]
+###############################################
+# in the interview, 
+# better to use helper func for recursive always
+###############################################
 
-def BSTSearch(arr, val, start, end):
-    if start < end:
-        mid = (start+end)//2
-        if arr[mid] == val:
-            print("found value = ", arr[mid])
-        elif val < arr[mid]: # left search
-            BSTSearch(arr, val, start, mid-1)
-        elif arr[mid] < val: # right search
-            BSTSearch(arr, val, mid+1, end)
+def halfSearch(arr, target):
+    left = 0
+    right = len(arr)-1
+    return halfSearch_helper(arr, target, left, right)
+    
+def halfSearch_helper(arr, target, left, right):
+    if left < right:
+        mid = (left+right)//2
+        if arr[mid] == target:
+            print("found!!", arr[mid])
+            return True
+        elif arr[mid] < target: 
+            halfSearch_helper(arr, target, mid+1, right)
+        elif target < arr[mid]:
+            halfSearch_helper(arr, target, left, mid-1)
+    
+print(halfSearch([1,2,5,6,7,8,9,11,25,263,277], 5))
 
-BSTSearch(arr_odd, 5, 0, len(arr_odd)-1)
-BSTSearch(arr_even, 77, 0, len(arr_even)-1)
+######################################
+##Binary Search - O(n)
+######################################
+print("----------------------- Binary Search -----------------------")
+def binarySearch (arr, l, r, x):
+    if r >= l:
+        mid = l + int((r - l)/2)
+        if arr[mid] == x:
+             return mid
+        elif arr[mid] > x:
+            return binarySearch(arr, l, mid-1, x)
+        else:
+            return binarySearch(arr, mid+1, r, x)
+    else:
+        return -1
+
+arr2 = [ 2, 3, 4, 10, 40, 50 ]
+x = 10
+result = binarySearch(arr2, 0, len(arr2)-1, x)
+
+if result != -1:
+    print ("Element is present at index :",result)
+else:
+    print ("Element is not present in array")

@@ -1,12 +1,13 @@
 from queue import Queue
 
-""" BST w/ linked list & recursion """
+""" Binary Search Tree """
 class Node(object):
     def __init__(self, data, left=None, right=None):
         self.left = left
         self.right = right
         self.data = data
 
+    """ Insert Node """
     def insert(self, data):
         if self.data: 
             if data < self.data:
@@ -18,6 +19,7 @@ class Node(object):
         else:
             self.data = data
 
+    """ Search Item """
     def search(self, data):
         if self.data == data: print("Found: ", self.data)
         elif data < self.data:
@@ -27,6 +29,7 @@ class Node(object):
             if self.right is None: print("Data not found")
             else: return self.right.search(data)
 
+    """ Print All Trees """
     def printTree(self):
         if self.left: self.left.printTree()
         print(self.data)
@@ -143,28 +146,27 @@ d = Node(12, Node(10, Node(3, Node(1), None), Node(11)), Node(15, None, Node(16)
 # d.insert(16)
 # d.insert(11)
 
-
 d.printTree()
-d.search(3)
-d.search(300)
+# d.search(3)
+# d.search(300)
 
-if (d.isBalanced(d)): print("Balanced!!")
-else: print("Not Balanced!!")
+# if (d.isBalanced(d)): print("Balanced!!")
+# else: print("Not Balanced!!")
 
-if (d.isBST(d)): print("It is BST")
-else: print("Not a BST")
+# if (d.isBST(d)): print("It is BST")
+# else: print("Not a BST")
 
-d.traverse(d)
+# d.traverse(d)
 
-print("preOrder")
-d.preOrder(d)
-print("inOrder")
-d.inOrder(d)
-print("postOrder")
-d.postOrder(d)
+# print("preOrder")
+# d.preOrder(d)
+# print("inOrder")
+# d.inOrder(d)
+# print("postOrder")
+# d.postOrder(d)
 
-print("max depth :", d.maxDepth(d))
+# print("max depth :", d.maxDepth(d))
 
-print('Common Parent Node is: ', d.commonParentNode(d, 1, 16))
+# print('Common Parent Node is: ', d.commonParentNode(d, 1, 16))
             
         

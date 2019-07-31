@@ -4,9 +4,7 @@ condition:
 2. a[x]+a[y]+a[z]=a[w]
 
 find all 3 sum that meets above condition 
-
 """
-
 
 def find(nums):
     temp=[]

@@ -1,9 +1,7 @@
-# binary search input must be sorted array 
-# otherwise, comparing value does not mean anything
-"""
-the binary search algorithm has a worst case time-complexity of O(log n ), 
-which is more efficient than the linear search. 
-"""
+
+###############################################
+# iteration
+###############################################
 def binarysearch(arr, target):
     low = 0
     high = len(arr)-1

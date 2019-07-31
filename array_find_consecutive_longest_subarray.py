@@ -13,7 +13,7 @@ values = set() # set sorts array - soring takes O(n logn)
 def consecutive(arr):
 	for i in arr:
 		values.add(i)
-	#print(values)
+	print(values)
 	mx = 0
 	for i in values:
 		if i-1 in values:

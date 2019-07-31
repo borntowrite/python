@@ -1,5 +1,87 @@
+import time
+from datetime import datetime
+
 ###################################################
-# recursive - dynamically
+# recursive - fibonacci
+# time complexity : O(2^N)
+###################################################
+t_start = time.perf_counter()
+def countways(x):
+    if x < 0:
+        return 0
+    elif x == 0:
+        return 1
+    else:
+        return countways(x-1) + countways(x-2)
+print(countways(30))
+t_end = time.perf_counter() 
+print("Total Time = ", t_end-t_start)
+###################################################
+# recursive - memonization
+# time complexity : O(N)
+###################################################
+# memo = {} # dict - hashmap
+memo = [None]*100
+t_start = time.perf_counter()
+def fib_memo(x):
+    if memo[x] is not None:
+        return memo[x]
+    if x == 0 or x == 1:
+        result = 1
+    else:
+        result = fib_memo(x-1)+fib_memo(x-2)
+    memo[x] = result
+    return memo[x]
+print(fib_memo(30))
+t_end = time.perf_counter() 
+print("Total Time = ", t_end-t_start)
+###################################################
+# Dynamic - bottomup
+# time complexity : O(N)
+###################################################
+t_start = time.perf_counter()
+def fib_bottomup(x):
+    memo = [None]*(x+1)
+    memo[0] = 1
+    memo[1] = 1
+    for i in range(2,x+1):
+        memo[i] = memo[i-1] + memo[i-2]
+    return memo[x]    
+print(fib_bottomup(30))
+t_end = time.perf_counter() 
+print("Total Time = ", t_end-t_start)
+
+
+###################################################
+# Another set of example
+###################################################
+
+def staircase(n):
+    if n <= 1:
+        return 1
+    return staircase(n - 1) + staircase(n - 2)
+
+# print(staircase(4))
+
+def staircase2(n):
+    a, b = 1, 2
+    for _ in range(n - 1):
+        a, b = b, a + b
+    return a
+
+# print(staircase2(4))
+
+def staircase3(n, X):
+    cache = [0 for _ in range(n + 1)]
+    cache[0] = 1
+    for i in range(1, n + 1):
+        cache[i] += sum(cache[i - x] for x in X if i - x >= 0)
+    return cache[n]
+
+# print(staircase3(4, [1,2]))
+
+###################################################
+# Another set of example
 ###################################################
 def num(n, arr):
     if n==0: return 1
@@ -9,95 +91,14 @@ def num(n, arr):
         total=0
         for j in arr:
             if i-j >=0:
-                total = total + nums[i-j]
-                print("{} = total + nums[{}-{}]".format(total, i, j))
+                total += nums[i-j]
+                # print("{} += nums[{}-{}]".format(total, i, j))
         nums[i] = total
-        print("nums[{}] = {}".format(i, nums[i]))
-        print("-----------------------------------------")
+        # print("nums[{}] = {}".format(i, nums[i]))
+        # print("-----------------------------------------")
     return nums[n]
 # arr=[1,3,5]
 # print(num(6,arr))
 arr1=[1,2,3]
-print(num(10,arr1))
+#print(num(10,arr1))
 
-""" OUTPUT:
-1 = total + nums[1-1]
-nums[1] = 1
------------------------------------------
-1 = total + nums[2-1]
-2 = total + nums[2-2]
-nums[2] = 2
------------------------------------------
-2 = total + nums[3-1]
-3 = total + nums[3-2]
-4 = total + nums[3-3]
-nums[3] = 4
------------------------------------------
-4 = total + nums[4-1]
-6 = total + nums[4-2]
-7 = total + nums[4-3]
-nums[4] = 7
------------------------------------------
-7 = total + nums[5-1]
-11 = total + nums[5-2]
-13 = total + nums[5-3]
-nums[5] = 13
------------------------------------------
-13 = total + nums[6-1]
-20 = total + nums[6-2]
-24 = total + nums[6-3]
-nums[6] = 24
------------------------------------------
-24 = total + nums[7-1]
-37 = total + nums[7-2]
-44 = total + nums[7-3]
-nums[7] = 44
------------------------------------------
-44 = total + nums[8-1]
-68 = total + nums[8-2]
-81 = total + nums[8-3]
-nums[8] = 81
------------------------------------------
-81 = total + nums[9-1]
-125 = total + nums[9-2]
-149 = total + nums[9-3]
-nums[9] = 149
------------------------------------------
-149 = total + nums[10-1]
-230 = total + nums[10-2]
-274 = total + nums[10-3]
-nums[10] = 274
------------------------------------------
-
-"""
-
-###################################################
-# recursive - normal
-# staircase - 1,2,3 step
-# runtime : 3^n
-###################################################
-
-def countways(x):
-    if x < 0:
-        return 0
-    elif x == 0:
-        return 1
-    else:
-        return countways(x-1) + countways(x-2) + countways(x-3)
-
-print(countways(10))
-
-###################################################
-# recursive - memonization
-###################################################
-memo = {} # dict - hashmap 
-def countways_memo(x):
-    if x < 0:
-        return 0
-    elif x == 0:
-        return 1
-    else:
-        memo[x] = countways(x-1) + countways(x-2) + countways(x-3)
-    return memo[x]
-
-print(countways_memo(10))

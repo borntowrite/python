@@ -1,115 +1,87 @@
+
+""" leetcode solution """
+class Solution(object):
+    # n: length
+    # k: alphabet
+    def DeBruijn(self, n, k):
+        seen = set()
+        answer = []
+        try:
+            alphabet = list(map(str, range(k)))
+        except(ValueError, TypeError):
+            alphabet = k
+        def dfs(node):
+            # map(function_to_apply, list_of_inputs)
+            for x in alphabet:
+                neighbor = node + x 
+                if neighbor not in seen:
+                    seen.add(neighbor) 
+                    dfs(neighbor[1:]) 
+                    answer.append(x) # Adding End Num
+        dfs(alphabet[0] * (n-1))
+        # print(seen)
+        return "".join(answer) + alphabet[0] * (n-1)
+
+print(Solution().DeBruijn(3,2))
+print(Solution().DeBruijn(3,"ab"))
+
 """
-de bruijn -> hard... 
-"""
-
-class Solution3(object):
-    def crackSafe(self, n, k):
-        # :type n: int
-        # :type k: int
-        # :rtype: str
-        res = [0] * (n-1)   
-        visited = set()
-        if self.dfs(res, visited, n, k):
-            return ''.join([str(m) for m in res])
-        return ''
-
-    def dfs(self, res, visited, n , k):
-        if len(visited) == k ** n:
-            return res
-        for i in range(k):
-            res.append(i)  
-            new_key = tuple(res[len(res)-n:])
-            print(new_key)
-            if new_key not in visited:
-                visited.add(new_key)
-                if self.dfs(res, visited, n, k):
-                    return True
-                visited.remove(new_key)
-            res.pop()
-        return False        
-
-print(Solution3().crackSafe(2, 3))
-
-# try:
-#     xrange
-# except NameError:
-#     xrange = range
-
-
-# def de_bruijn_ize(st, k):
-#     edges = []
-#     nodes = set()
-#     for i in range(len(st)-k+1):
-#         edges.append((st[i:i+k-1], st[i+1:i+k])) # add as tuple 
-#         nodes.add(st[i:i+k-1]) # set does not save dup item
-#         nodes.add(st[i+1:i+k])
-#     return nodes, edges
-
-# nodes, edges = de_bruijn_ize('012345', 4)
-# print(nodes)
-# print(edges)
-
-# nodes, edges = de_bruijn_ize('ACGCGTCG', 4)
-# print(nodes)
-# print(edges)
-
-""" ==> you can use this on jupyter notebook to visualize 
-
-def visualize_de_bruijn(st,k):
-    nodes, edges = de_bruijn_ize(st, k)
-    dot_str = 'digraph "DeBruijn graph" {\n'
-    for node in nodes:
-        dot_str += '  %s [label="%s"] ;\n' % (node, node)
-    for src, dst in edges:
-        dot_str += ' %s -> %s ;\n' % (src, dst)
-    return dot_str + '}\n'
-
-%load_ext gvmagic
-%dotstr visualize_de_bruijn('ACGCGTCG', 3)
+[answer --> 00111010] + ["0"*(n-1) --> 00] = 
+0011101000
+000
+ 011
+  111
+   110
+    101
+     010
+      100
+       000
 """
 
-""" Visualized Graph
- GC    AC
-  \ ^\  /
-    CG
-   /  ^\
-  GT   |
-   \  / 
-    TC 
+""" wikipedia solution """
+
+def de_bruijn(n, k):
+    """
+    de Bruijn sequence for alphabet k
+    and subsequences of length n.
+    """
+    try:
+        # let's see if k can be cast to an integer;
+        # if so, make our alphabet a list
+        _ = int(k)
+        alphabet = list(map(str, range(k)))
+
+    except (ValueError, TypeError):
+        alphabet = k
+        k = len(k)
+
+    a = [0] * k * n
+    sequence = []
+
+    def db(t, p):
+        if t > n:
+            if n % p == 0:
+                sequence.extend(a[1:p + 1])
+        else:
+            a[t] = a[t - p]
+            db(t + 1, p)
+            for j in range(a[t - p] + 1, k):
+                a[t] = j
+                db(t + 1, t)
+    db(1, 1)
+    return "".join(alphabet[i] for i in sequence)
+
+print(de_bruijn(3, 2))
 """
-
-# class Solution(object):
-#     def crackSafe(self, n, k):
-#         seen = set()
-#         ans = []
-#         def dfs(node):
-#             for x in map(str, range(k)):
-#                 nei = node + x
-#                 if nei not in seen:
-#                     print(nei)
-#                     seen.add(nei)
-#                     dfs(nei[1:])
-#                     ans.append(x)
-#         dfs("0" * (n-1))
-#         return "".join(ans) + "0" * (n-1)
-
-# # crackSafe(n,k)
-# # k = number list
-# # n = length 
-# print(Solution().crackSafe(6,2)) 
-
-# class Solution2(object):
-#     def crackSafe(self, n, k):
-#         M = k**(n-1)
-#         P = [q*k+i for i in xrange(k) for q in xrange(M)]
-#         ans = []
-
-#         for i in xrange(k**n):
-#             j = i
-#             while P[j] >= 0:
-#                 ans.append(str(j / M))
-#                 P[j], j = -1, P[j]
-
-#         return "".join(ans) + "0" * (n-1)
-
-# print(Solution2().crackSafe(3,3)) 
+00010111 + 00 
+000
+ 001
+  010
+   101
+    011
+     111
+      110
+       100
+ 
+"""
+print(de_bruijn(2, "abcd"))

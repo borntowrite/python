@@ -1,37 +1,39 @@
 from collections import deque
 """
-1 -> 2 -> 3
-|    ^
-4 -> 5 
+a - b - d - e - a
+|       | /
+c       f
 """
-
-def maxDepth(root):
-    if root == None: return 0
-    left = maxDepth(root.left)
-    right = maxDepth(root.right)
-    return max(left, right)+1
-
-def shortestpath(start, target):
-    q = deque()
-    q.append(start)
-    DEPTH_OF_TREE = 6
-    distance = [-1 for i in range(DEPTH_OF_TREE)] # init distance with -1 
-    distance[start] = 0
-    while q:
-        parent = q.popleft()
-        for n in parent.neighbors:
-            if distance[n] == -1:
-                distance[n] = distance[parent] + 1
-                if n == target:
-                    print("found!!")
-                else:
+class Solution(object):
+    def shortestpath(self, graph, start, target):
+        distance = [0 for x in range(1000)]
+        q = deque()
+        q.append(start)
+        s = set(start)
+        while q:
+            parent = q.popleft()
+            for n in graph[parent]:
+                if n not in s:
+                    distance[ord(n)] = distance[ord(parent)] + 1
                     q.append(n)
-            else:
-                # if distance[n] is updated, it means visited before hence skip
-                pass
+                    s.add(n)
+        return distance[ord(target)]
+"""
+if graph is number, then it'll be much eaiser... 
+then don't need set to remember visited node but instead
+i can use distance as visited note at the same time i can also 
+remember distance
+"""
+gdict = { "a" : set(["b","c"]),
+        "b" : set(["a", "d"]),
+        "c" : set(["a", "d"]),
+        "d" : set(["e", "f"]),
+        "e" : set(["a"]),
+        "f" : set(["e", "d"])
+        }
 
-shortestpath(1, 2)
-
+print(Solution().shortestpath(gdict, "a", "d"))
+print(Solution().shortestpath(gdict, "a", "f"))
 
 
 

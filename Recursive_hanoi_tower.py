@@ -11,8 +11,6 @@ def TH(n , s, a, d):
 
 TH(4, 'A', 'B', 'C')
 
-
-
 ##def hanoi(n, a, b, c):
 ##        print(a, b, c)
 ##        if n > 0:

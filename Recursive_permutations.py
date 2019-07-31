@@ -1,5 +1,5 @@
 #################################################################
-# Solution 1
+# Solution 1 - recursion 
 #################################################################
 """
 idea of this recursion is... 
@@ -32,7 +32,7 @@ for p in permutation(data):
     print(p)
 
 #################################################################
-# Solution 2
+# Solution 2 - Recursion
 #################################################################
 def permu(num):
 	result = []
@@ -55,7 +55,7 @@ def permu_helper(num, result, cur, used):
 print(permu([1,2,3]))
 
 #################################################################
-# Solution 3
+# Solution 3 - itertools
 #################################################################
 import itertools
 for i in itertools.permutations('abc'):

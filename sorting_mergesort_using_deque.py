@@ -1,5 +1,12 @@
+
 from collections import deque
-    
+
+"""
+time complexity: O(nlogn)
+space complexity: 
+
+"""
+
 def mergeSort(s):
     if len(s) == 0 or len(s) == 1:
         return s
@@ -13,7 +20,8 @@ def merge(a, b):
     c = []
     a = deque(a)
     b = deque(b)
-    while len(a) != 0 and len(b) != 0:
+    # while len(a) != 0 and len(b) != 0:
+    while a and b:
         if a[0] < b[0]:
             c.append(a[0])
             a.popleft()
@@ -33,6 +41,4 @@ def merge(a, b):
 
 s = [54,26,93,17,77,31,44,55,20]
 print(mergeSort(s))
-a = [1]
-b = [2]
-print(a+b)
+

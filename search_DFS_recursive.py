@@ -1,30 +1,28 @@
-# class graph:
+class graph:
+    def __init__(self,gdict=None):
+        if gdict is None:
+            gdict = {}
+        self.visited = []
+        self.gdict = gdict
 
-#     def __init__(self,gdict=None):
-#         if gdict is None:
-#             gdict = {}
-#         self.gdict = gdict
-# Check for the visisted and unvisited nodes
-
-# Original version in the web site
-# def dfs(graph, start, visited = None):
-#     if visited is None:
-#         visited = set()
-#     visited.add(start)
-#     print(start)
-#     for next in graph[start] - visited:
-#         dfs(graph, next, visited)
-#     return visited
-
-visited = []
-def dfs(graph, start):
-    if start in visited:
-        return print("already visited")
-    visited.append(start)
-    print("visited: ", visited)
-    for next in graph[start]:
-        dfs(graph, next)
-    return visited
+    # Original version in the web site
+    def dfs1(self,graph, start, visited = None):
+        if visited is None:
+            visited = set()
+        visited.add(start)
+        print(start)
+        for next in graph[start] - visited:
+            self.dfs1(graph, next, visited)
+        return visited
+    
+    def dfs2(self, graph, start):
+        if start in self.visited:
+            return print("already visited")
+        print(start)
+        self.visited.append(start)
+        for next in graph[start]:
+            self.dfs2(graph, next)
+        return self.visited
 
 gdict = { "a" : set(["b","c"]),
                 "b" : set(["a", "d"]),
@@ -34,4 +32,5 @@ gdict = { "a" : set(["b","c"]),
                 "f" : set(["e", "d"])
                 }
 
-dfs(gdict, 'a')
+print(graph().dfs1(gdict, 'a'))
+print(graph().dfs2(gdict, 'a'))
