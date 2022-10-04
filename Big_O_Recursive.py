@@ -1,13 +1,13 @@
 
 ##The first function is being called recursively n times before reaching base case so its O(n), often called linear.
 
-int recursiveFun1(int n)
-{
-    if (n <= 0)
-        return 1;
-    else
-        return 1 + recursiveFun1(n-1);
-}
+def recursiveFun1(n):
+    print(n)
+    if (n <= 0):
+        return 1
+    else:
+        return 1 + recursiveFun1(n-1)
+
 
 #The second function is called n-5 for each time, 
 #so we deduct five from n before calling the function, but n-5 is also O(n). 
